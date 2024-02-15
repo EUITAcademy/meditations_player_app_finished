@@ -1,6 +1,4 @@
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:meditations_player_app/models/item.dart';
 
 class MainScreen extends StatefulWidget {
@@ -11,10 +9,6 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  // https://freesound.org/ - free music
-  final audioPlayer = AudioPlayer();
-
-  int? playingIndex;
 
   // Forest, ocean, wind, night, waterfall
   List<Item> items = [
@@ -49,55 +43,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: ListView.builder(
-          itemCount: items.length,
-          itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Container(
-                height: 100,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: AssetImage(
-                      items[index].imagePath,
-                    ),
-                  ),
-                ),
-                child: ListTile(
-                  title: Text(items[index].name),
-                  // Ternary operator
-                  leading: IconButton(
-                    icon: playingIndex == index
-                        ? const FaIcon(FontAwesomeIcons.stop)
-                        : const FaIcon(FontAwesomeIcons.play),
-                    onPressed: () async {
-                      if (playingIndex == index) {
-                        setState(() {
-                          playingIndex = null;
-                        });
-
-                        await audioPlayer.stop();
-                      } else {
-                        try {
-                          await audioPlayer.play(AssetSource(items[index].audioPath));
-                          setState(() {
-                            playingIndex = index;
-                          });
-                        } catch (error) {
-                          print(error);
-                        }
-                      }
-                    },
-                  ),
-                ),
-              ),
-            );
-          },
-        ),
-      ),
+      body: Container(),
     );
   }
 }
