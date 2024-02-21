@@ -74,21 +74,21 @@ class _MainScreenState extends State<MainScreen> {
                         ? const FaIcon(FontAwesomeIcons.stop)
                         : const FaIcon(FontAwesomeIcons.play),
                     onPressed: () async {
-                      if (playingIndex == index) {
-                        setState(() {
-                          playingIndex = null;
-                        });
-
-                        await audioPlayer.stop();
-                      } else {
-                        try {
-                          await audioPlayer.play(AssetSource(items[index].audioPath));
+                      try {
+                        if (playingIndex == index) {
+                          setState(() {
+                            playingIndex = null;
+                          });
+                          await audioPlayer.stop();
+                        } else {
+                          await audioPlayer
+                              .play(AssetSource(items[index].audioPath));
                           setState(() {
                             playingIndex = index;
                           });
-                        } catch (error) {
-                          print(error);
                         }
+                      } catch (error) {
+                        print(error);
                       }
                     },
                   ),
